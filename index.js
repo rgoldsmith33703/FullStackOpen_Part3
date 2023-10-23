@@ -89,12 +89,3 @@ app.listen(PORT, () => {
 })
 
 
-
-
-// else if (persons.forEach(person => {
-//   person.name === body.name
-// })) {
-//   return response.status(400).json({
-//     error: 'name must be unique'
-//   })
-// }
