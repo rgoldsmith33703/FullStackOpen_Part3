@@ -3,7 +3,7 @@ const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
 
-app.use(cors)
+app.use(cors())
 
 app.use(express.json())
 
@@ -66,9 +66,11 @@ app.get('/api/persons/:id', (request, response) => {
 
 app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
-  notes = notes.filter(note => note.id !== id)
+  persons = persons.filter(person => person.id !== id)
 
-  response.status(204).end()
+  response.status(204).end(() => {
+    console.log(response)
+  })
 })
 
 app.post('/api/persons', (request, response) => {
