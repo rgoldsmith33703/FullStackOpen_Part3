@@ -12,11 +12,11 @@ app.use(express.json())
 app.use(express.static('./dist'))
 
 
-morgan.token('personName', (req, res) => {
+morgan.token('personName', (req) => {
   return req.body.name
 })
 
-morgan.token('personNumber', (req, res) => {
+morgan.token('personNumber', (req) => {
   return req.body.number
 })
 
@@ -38,14 +38,14 @@ app.get('/api/persons/:id', (request, response, next) => {
       }
     })
     .catch(error => next(error))
-  })
+})
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-  .then(result => {
-    response.status(204).end()
-  })
-  .catch(error => next(error))
+    .then(response => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 app.post('/api/persons', (request, response, next) => {
@@ -76,11 +76,6 @@ app.post('/api/persons', (request, response, next) => {
 app.put('/api/persons/:id', (request, response, next) => {
   const { name, number } = request.body
 
-  const person = {
-    name,
-    number,
-  }
-
   Person.findByIdAndUpdate(
     request.params.id, 
     { name, number },
@@ -95,7 +90,7 @@ const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 
-const errorHandler = (error, request, next) => {
+const errorHandler = (error, response, request, next) => {
   console.log(error.message)
 
   if (error.name === 'CastError') {
