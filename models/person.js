@@ -25,8 +25,8 @@ mongoose.connect(url)
       minLength: 8,
       validate: {
         validator: function(v) {
-          const regex = '/^\d{2,3}-\d+$/'
-          return regex.test(v);
+          const regex = /^\d{2,3}-\d+$/
+          return regex.test(v)
         }
       },
     }
